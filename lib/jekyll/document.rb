@@ -429,14 +429,14 @@ module Jekyll
       categories.flatten!
       categories.uniq!
 
-      merge_data!("categories" => categories)
+      merge_data!({"categories" => categories})
     end
 
     def populate_tags
       tags = Utils.pluralized_array_from_hash(data, "tag", "tags")
       tags.flatten!
 
-      merge_data!("tags" => tags)
+      merge_data!({"tags" => tags})
     end
 
     private
@@ -463,7 +463,7 @@ module Jekyll
     end
 
     def read_content(opts)
-      self.content = File.read(path, Utils.merged_file_read_opts(site, opts))
+      self.content = File.read(path, **Utils.merged_file_read_opts(site, opts))
       if content =~ YAML_FRONT_MATTER_REGEXP
         self.content = $POSTMATCH
         data_file = SafeYAML.load(Regexp.last_match(1))
